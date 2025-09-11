@@ -1,33 +1,63 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="w-md bg-primary-blue text-white">
+      <div className="">
+        {/* Logo placeholder */}
+        <div className="">
+          <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center">
+            <span className="text-2xl font-bold">C</span>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form className="">
+          <div>
+            <label className="block mb-1 text-sm font-medium">Code de la salle</label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium">Votre nom de joueur</label>
+            <input
+              type="text"
+              placeholder="Ex: James Bond"
+              className="w-full px-3 py-2 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 mt-4 text-white bg-button-blue rounded-md hover:bg-button-blue-hover"
+          >
+            Rejoindre le jeu
+          </button>
+        </form>
+
+        {/* Create room link */}
+        <div className="mt-6 nk-blue text-center">
+          <a href="#" className="text-link-blue hover:underline">
+            Créer une salle de jeu ?
+          </a>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-10 text-center text-sm text-gray-400">
+          Projet Open Source developpé par{" "}
+          <a href="#" className="hover:underline">
+            Uncle Sam
+          </a>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    </div>
     </>
   )
 }

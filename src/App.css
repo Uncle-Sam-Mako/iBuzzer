@@ -1,3 +1,17 @@
+@import "tailwindcss";
+
+
+@theme {
+  --color-primary-blue: #252c36 ; 
+  --color-secondary-blue : #3b4a5d ;
+  --color-third-blue: #7e94b1 ;
+  --color-link-blue: #b5ddf2 ;
+  --color-button-blue : #09A7F6;
+  --color-button-blue-hover : #48C2FF;
+}
+
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -32,7 +46,7 @@
     animation: logo-spin infinite 20s linear;
   }
 }
-
+#b5ddf2
 .card {
   padding: 2em;
 }
