@@ -8,6 +8,8 @@
   --color-link-blue: #b5ddf2 ;
   --color-button-blue : #09A7F6;
   --color-button-blue-hover : #48C2FF;
+  --color-button-red : #de3d3d;
+  --color-button-red-hover : #F25858;
 }
 
 
@@ -53,4 +55,17 @@
 
 .read-the-docs {
   color: #888;
+}
+
+
+/*Buzzer button*/
+.buzzer_btn {
+  background: radial-gradient(50% 50% at 50% 50%, #D77C7C 0%, #DE3D3D 100%);
+  border: 9px solid #FFFFFF;
+  box-shadow: 0px 0px 14.4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.buzzer_btn:hover {
+  background: radial-gradient(50% 50% at 50% 50%, #f19e9e 0%, #DE3D3D 100%);
+  border: 9px solid #FFFFFF;
 }
