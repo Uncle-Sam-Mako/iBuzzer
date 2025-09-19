@@ -1,6 +1,9 @@
 import React from 'react'
+import { handleAnonymousLogin } from './Auth'
 
 export default function ParticipantForm() {
+
+  
   return (
     <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
         <div className="flex flex-col justify-around">
@@ -29,13 +32,13 @@ export default function ParticipantForm() {
               />
             </div>
             <div className="my-5">
-              <button type="submit" className="w-full py-2 mt-4 text-white bg-button-blue rounded-md hover:bg-button-blue-hover">Rejoindre le jeu</button>
+              <button onClick={handleAnonymousLogin} className="w-full py-2 mt-4 text-white bg-button-blue rounded-md hover:bg-button-blue-hover">Rejoindre le jeu</button>
             </div>
           </form>
 
           {/* Create room link */}
           <div className="mt-5 nk-blue text-center">
-            <a href="#" className="text-link-blue hover:underline">
+            <a onClick={e => login()} href="#" className="text-link-blue hover:underline">
               Créer une salle de jeu ?
             </a>
           </div>
