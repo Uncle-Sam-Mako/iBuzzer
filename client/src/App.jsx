@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <ParticipantForm></ParticipantForm>
+      <ParticipantScreen></ParticipantScreen>
     </>
   )
 }
