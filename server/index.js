@@ -12,6 +12,27 @@ const wsServer = new WebSocketServer({server});
 
 const port = 8000;
 
+
+//Broadcast messages to all connected users
+const broadcast = () => {
+    Object.keys(connections).forEach(uuid => {
+        const connection = connections[uuid];
+        const message = JSON.stringify(users);
+        connection.send(message);
+    })
+}
+
+const handleMessage = (bytes, uuid) => {
+    const message = JSON.parse(bytes.toString());
+    const user = users[uuid];
+
+    user.state = message;
+
+    broadcast();
+
+    console.log(`${user.username} updated their state : ${JSON.stringify(user.state)}`);
+}
+
 //When a user log out
 const handleClose = uuid => {
 
@@ -37,6 +58,9 @@ wsServer.on('connection', (connection, request) => {
 
         }
     }
+
+    connection.on('message', message => handleMessage(message, uuid));
+
     //When a connection is closed
     connection.on("close", () => handleClose(uuid));
 

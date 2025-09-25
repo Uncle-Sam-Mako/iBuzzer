@@ -8,9 +8,11 @@ import './App.css'
 
 function App() {
 
+  const [username, setUsername] = useState('');
+
   return (
     <>
-      <ParticipantScreen></ParticipantScreen>
+      <ParticipantForm onSubmit={setUsername}/>
     </>
   )
 }

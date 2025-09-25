@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { handleAnonymousLogin } from './Auth'
 
-export default function ParticipantForm() {
+export default function ParticipantForm({ onSubmit }) {
+  const [username, setUsername] = useState('');
 
+  
   
   return (
     <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
@@ -15,7 +17,13 @@ export default function ParticipantForm() {
           </div>
 
           {/* Form */}
-          <form className="">
+          <form className=""
+            onSubmit={e => {
+                e.preventDefault()
+                onSubmit(username)
+                console.log(username)
+            }}
+          >
             <div className="my-5">
               <label className="block mb-1 text-sm font-medium">Code de la salle</label>
               <input
@@ -26,13 +34,15 @@ export default function ParticipantForm() {
             <div className="my-5">
               <label className="block mb-1 text-sm font-medium">Votre nom de joueur</label>
               <input
+                value={username}
+                onChange={e => setUsername(e.target.value)}
                 type="text"
                 placeholder="Ex: James Bond"
                 className="w-full px-3 py-2 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="my-5">
-              <button onClick={handleAnonymousLogin} className="w-full py-2 mt-4 text-white bg-button-blue rounded-md hover:bg-button-blue-hover">Rejoindre le jeu</button>
+              <input type='submit' className="w-full py-2 mt-4 text-white bg-button-blue rounded-md hover:bg-button-blue-hover" value={"Rejoindre le jeu"}/>
             </div>
           </form>
 
