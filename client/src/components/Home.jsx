@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import ParticipantForm from './ParticipantForm';
-import ParticipantScreen from './ParticipantScreen';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Footer } from './Footer';
+
+
 
 
 function Home() {
 
 
-
-  
+ 
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [roomCode, setRoomCode] = useState('QPUC2025');
 
   const handleCreateRoom = () => {
     const roomId = "QPUC2025";
-    navigate(`/room/${roomId}?admin=true&name=${playerName || "Admin"}`);
+    navigate(`/room/${roomId}?admin=true&name=${username || "Admin"}`);
   };
 
   const handleJoinRoom = () => {
@@ -68,18 +68,12 @@ function Home() {
 
         {/* Create room link */}
         <div className="mt-5 nk-blue text-center">
-          <a onClick={e => login()} href="#" className="text-link-blue hover:underline">
+          <button onClick={handleCreateRoom} href="#"  className="text-link-blue hover:underline ring-2 ring-link-blue">
             Créer une salle de jeu ?
-          </a>
+          </button>
         </div>
 
-        {/* Footer */}
-        <div className="mt-10 text-center text-sm text-gray-400">
-          Open Source project developed by{" "}
-          <a href="#" className="hover:underline">
-            Uncle Sam
-          </a>
-        </div>
+        <Footer></Footer>
       </div>
     </div>
   )

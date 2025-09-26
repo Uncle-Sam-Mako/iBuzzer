@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom';
-
+import usewebsocket from 'react-use-websocket';
 
 let participants = [
     {"name" : "Freddy", "score" : 5},
@@ -13,8 +13,15 @@ let participants = [
 
 
 function Room() {
+    
+    const WS_URL = 'ws://localhost:8000';
+
     const [searchParams] = useSearchParams();
     const username = searchParams.get("name") || "Anonyme";
+
+     const {sendJsonMessage } = usewebsocket(WS_URL, {
+        queryParams: {username} 
+    })
 
 
     return (
@@ -26,7 +33,7 @@ function Room() {
                     <p className="text-blue-300 text-lg font-bold my-2">{username}</p>
                 </div>
 
-
+                
                 <div className="flex flex-col items-center my-3">
                     {/* Score */}
                     <div className="flex flex-col items-center mb-8">
