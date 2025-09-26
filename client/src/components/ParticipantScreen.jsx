@@ -10,14 +10,14 @@ let participants = [
     {"name" : "Nathalie", "score" : 5},
 ]
 
-function ParticipantScreen() {
+function ParticipantScreen({username}) {
     return (
         <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
             <div className="flex flex-col justify-around">
                 {/* Header */}
                 <div className="text-center">
                     <h2 className="text-2xl font-semibold">Question pour un chrétien</h2>
-                    <p className="text-blue-300 text-md font-bold my-2">05:19</p>
+                    <p className="text-blue-300 text-lg font-bold my-2">{username}</p>
                 </div>
 
 
