@@ -1,24 +1,17 @@
-import { useState } from 'react';
-import ParticipantForm from './components/ParticipantForm';
-import HostForm from './components/HostForm';
-import ParticipantScreen from './components/ParticipantScreen';
-import HostScreen from './components/HostScreen';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Room from "./components/Room";
 import './App.css'
 
 function App() {
-
-  const [username, setUsername] = useState(null);
-
-  return username ? (
-    <>
-      <ParticipantScreen username={username}/>
-    </>
-  ) : (
-    <>
-      <ParticipantForm onSubmit={setUsername}/>
-    </>
-  )
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/room/:roomId" element={<Room />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
