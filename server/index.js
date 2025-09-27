@@ -23,8 +23,8 @@ let buzzerWinnerId = null;
 const broadcast = (roomId, message) => {
     const room = rooms[roomId];
     if (!room) return; // Room does not exist
-
-    const allConnections = [...Object.values(room.players), room.admin];
+    
+    const allConnections = [...Object.values(room.players), room.admin]; //
     
     allConnections.forEach(conn => {    
         if(conn && conn.readyState === conn.OPEN) {
@@ -110,9 +110,38 @@ wsServer.on('connection', (connection, request) => {
                 players: Object.keys(rooms[roomId].players),
             });
         }
-
+        //If a player buzz
         if(data.type === "buzz"){
             const {roomId, username} = data;
+            const room = rooms[roomId];
+
+            if(!room){
+                connection.send(JSON.stringify({type: "error", message: "Room does not exist"}));
+                return;
+            }
+
+            if(room.locked){
+                connection.send(JSON.stringify({type: "blocked", message: "Buzzer is locked"}));
+                return;
+            }
+
+            room.locked = true;
+            room.buzzerWinnerId = uuid
+
+            // Notify all players about the buzz event
+            const allConnections = [...Object.values(room.players), room.admin]; 
+
+            allConnections.forEach(conn => {
+                if(conn && conn.readyState === conn.OPEN) {
+                    if(conn === connection){
+                        conn.send(JSON.stringify({type: "buzz", message: "You are the first to buzz!"}));
+                    } else {
+                        conn.send(JSON.stringify({type: "buzz", message: `${username} has buzzed first!`}));
+                    }
+                }
+            });
+
+            
             broadcast(roomId, {
                 type: "buzz",
                 playerName: username,
@@ -121,7 +150,6 @@ wsServer.on('connection', (connection, request) => {
 
         console.log('data', data); 
 
-        //handleMessage(data.roomId, message, uuid)
     });
 
     //When a connection is closed

@@ -45,6 +45,13 @@ function Room() {
                 setPlayers(data.players);
             }
 
+            if(data.type === "buzz"){
+                //
+            }
+            if(data.type === "blocked"){
+                console.log("Buzzer is locked");
+            }
+
             console.log("Message from server ", data);
         }
     })
