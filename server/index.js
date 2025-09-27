@@ -17,6 +17,7 @@ const wsServer = new WebSocketServer({server});
 
 let rooms = {};
 
+let buzzerWinnerId = null;
 
 //Broadcast messages to all connected users
 const broadcast = (roomId, message) => {
@@ -40,6 +41,8 @@ const handleMessage = (roomId, bytes, uuid) => {
 
    
     broadcast(roomId, JSON.stringify({users}));
+
+    console.log("uuid : ", uuid)
 
     console.log(`${user.username} updated their state : ${JSON.stringify(user.state)}`);
 }
@@ -100,10 +103,21 @@ wsServer.on('connection', (connection, request) => {
             //add player to the room
             rooms[roomId].players[uuid] = connection;
             console.log("User ", username, " joined room ", roomId);
+
+            broadcast(roomId, {
+                type: "player-joined",
+                playerName: username,
+                players: Object.keys(rooms[roomId].players),
+            });
         }
 
+        if(data.type === "buzz"){
+            console.log("buzz")
+        }
 
-        handleMessage(message, uuid)
+        console.log(data) ; 
+
+        handleMessage(data.roomId, message, uuid)
     });
 
     //When a connection is closed
