@@ -72,7 +72,6 @@ function Room() {
        sendJsonMessage({type: "buzz", roomId: roomId, username: username})
     }
 
-    console.log(players)
     return (
         <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
             <div className="flex flex-col justify-around">
