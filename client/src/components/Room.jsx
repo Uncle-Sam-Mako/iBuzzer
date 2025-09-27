@@ -24,7 +24,7 @@ function Room() {
     const username = searchParams.get("name") || "Anonyme";
     const isAdmin = searchParams.get("admin") === "true";
     const [players, setPlayers] = useState([]);
-    const [buzzed, setBuzzed] = useState(null);
+    const [buzzerWinner, setBuzzerWinner] = useState(null);
     const wsRef = useRef(null);
     const [buzzerStatus, setBuzzerStatus] = useState("ready"); // "ready", "buzzed", "blocked"
 
@@ -52,6 +52,7 @@ function Room() {
                 } else {
                     setBuzzerStatus("blocked");
                 }
+                setBuzzerWinner(data.playerName);
             }
 
             if(data.type === "blocked"){       
@@ -60,6 +61,7 @@ function Room() {
 
             if(data.type === "reset"){
                 setBuzzerStatus("ready");
+                setBuzzerWinner(null);
             }
 
             console.log("Message from server ", data);
@@ -81,37 +83,32 @@ function Room() {
                 </div>
 
                 {
-                    isAdmin ? <HostScreen /> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
+                    isAdmin ? <HostScreen buzzerWinner={buzzerWinner}/> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
                 }
 
 
                 {/* Participants */}
                 <div className="w-full my-3">
-                    <p className="flex items-center gap-2 text-gray-300 text-sm mb-3">
-                        <span>👥</span> Participants
-                    </p>
-                    <div className="flex gap-2 flex-wrap">
+                    <ul className="list bg-base-100 rounded-box shadow-md">
+
+                        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Liste des participants</li>
+
                         {participants.map((participant, i) => (
-                            <div
-                                key={i}
-                                className="flex flex-col items-center bg-gray-700 rounded-lg px-4 py-3 flex-1 min-w-[70px]"
-                            >
-                                <p className="font-semibold">{participant.name}</p>
-                                <p className="text-3xl font-bold text-gray-300">{participant.score}</p>
-                                <p>pts</p>
-                            </div>
+                            <li key={i} className="list-row bg-gray-700 p-5 border-b-2 border-gray-600">
+                                <div>
+                                    <div>{participant.name}</div>
+                                </div>
+                            </li>
                         ))}
-                    </div>
-                    <div className="my-5">
-                      <button type="submit" className="w-full py-2 mt-4 text-white bg-button-red rounded-md hover:bg-button-red-hover">Quitter le jeu</button>
-                  </div>
+
+                    </ul>
                 </div>
-
-
-
-
+                <div className="my-5">
+                    <button type="submit" className="w-full py-2 mt-4 text-white bg-button-red rounded-md hover:bg-button-red-hover">Quitter le jeu</button>
+                </div>
             </div>
         </div>
+    
     )
 }
 

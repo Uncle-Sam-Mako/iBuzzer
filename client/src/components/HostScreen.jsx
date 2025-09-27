@@ -2,10 +2,15 @@ import React from 'react'
 
 
 
-function HostScreen() {
+function HostScreen({buzzerWinner}) {
     return (
 
         <div className=''>
+            
+                <div className='mb-4 p-4 bg-yellow-300 text-black font-bold text-center rounded-md'>
+                    {buzzerWinner ? `${buzzerWinner} a buzzé en premier !` : "En attente de buzz..."}
+                </div>
+            
             <div className='options_container flex gap-2 my-2'>
                 <div className="sound_switch flex-1  bg-gray-700 rounded-lg px-4 py-3">
                     <span className='icon text-xl pr-1'>&#128264;</span>

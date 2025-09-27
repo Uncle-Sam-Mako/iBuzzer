@@ -1,5 +1,10 @@
 import React from 'react'
 
+const buzzerMsg = {
+    "ready": "Appuyez pour prendre la main",
+    "buzzed": "Repondez rapidemment",
+    "blocked": "Patientez"
+}
 
 function ParticipantScreen({onBuzz, buzzerStatus}) {
     return (
@@ -20,8 +25,8 @@ function ParticipantScreen({onBuzz, buzzerStatus}) {
                  ${buzzerStatus === "ready" ? "buzzer_ready hover:border-red-300!" : ""}  
                  ${buzzerStatus === "blocked" ? "buzzer_blocked hover:border-gray-300!" : ""} 
                  ${buzzerStatus === "buzzed" ? "buzzer_buzzed hover:border-yellow-300!" : ""} 
-                 buzzer_btn w-56 h-56 rounded-full! font-extrabold text-2xl!transition!`}>
-                {buzzerStatus}
+                 buzzer_btn w-56 h-56 rounded-full! font-extrabold text-2xl! transition!`}>
+                {buzzerMsg[buzzerStatus]}
             </button>
         </div>
 
