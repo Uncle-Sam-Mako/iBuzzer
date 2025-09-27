@@ -72,7 +72,7 @@ function Room() {
        sendJsonMessage({type: "buzz", roomId: roomId, username: username})
     }
 
-
+    console.log(players)
     return (
         <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
             <div className="flex flex-col justify-around">
@@ -93,10 +93,10 @@ function Room() {
 
                         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Liste des participants</li>
 
-                        {participants.map((participant, i) => (
+                        {players.map((participant, i) => (
                             <li key={i} className="list-row bg-gray-700 p-5 border-b-2 border-gray-600">
                                 <div>
-                                    <div>{participant.name}</div>
+                                    <div>{participant}</div>
                                 </div>
                             </li>
                         ))}

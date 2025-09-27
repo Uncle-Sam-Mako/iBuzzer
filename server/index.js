@@ -101,7 +101,7 @@ wsServer.on('connection', (connection, request) => {
             }
 
             //add player to the room
-            rooms[roomId].players[uuid] = connection;
+            rooms[roomId].players[username] = connection; 
             console.log("User ", username, " joined room ", roomId);
 
             broadcast(roomId, {
