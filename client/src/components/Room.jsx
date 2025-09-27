@@ -1,6 +1,9 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import usewebsocket from 'react-use-websocket';
+import ParticipantScreen from './ParticipantScreen';
+import HostScreen from './HostScreen';
 
 let participants = [
     {"name" : "Freddy", "score" : 5},
@@ -11,18 +14,21 @@ let participants = [
     {"name" : "Nathalie", "score" : 5},
 ]
 
+const WS_URL = 'ws://localhost:8000';
+
 
 function Room() {
-    
-    const WS_URL = 'ws://localhost:8000';
-
+    const { roomId } = useParams();
     const [searchParams] = useSearchParams();
     const username = searchParams.get("name") || "Anonyme";
+    const isAdmin = searchParams.get("admin") === "true";
 
      const {sendJsonMessage } = usewebsocket(WS_URL, {
         queryParams: {username} 
     })
 
+
+   
 
     return (
         <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
@@ -33,21 +39,10 @@ function Room() {
                     <p className="text-blue-300 text-lg font-bold my-2">{username}</p>
                 </div>
 
-                
-                <div className="flex flex-col items-center my-3">
-                    {/* Score */}
-                    <div className="flex flex-col items-center mb-8">
-                        <div className="border-4 border-gray-500 rounded-full px-6 py-4 text-center">
-                            <p className="text-xs text-gray-300">SCORE</p>
-                            <p className="text-3xl font-bold">07</p>
-                        </div>
-                    </div>
+                {
+                    isAdmin ? <HostScreen /> : <ParticipantScreen />
+                }
 
-                    {/* Buzzer Button */}
-                    <button className="buzzer_btn w-56 h-56 rounded-full! font-extrabold text-2xl! hover:border-red-300! hover:bg-red-600 transition!">
-                        Appuyez pour buzzer
-                    </button>
-                </div>
 
                 {/* Participants */}
                 <div className="w-full my-3">
