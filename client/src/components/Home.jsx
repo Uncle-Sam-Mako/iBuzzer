@@ -38,7 +38,7 @@ function Home() {
         <form className=""
           onSubmit={e => {
             e.preventDefault()
-            handleJoinRoom();
+            !username ? alert("Entrez votre nom") : handleJoinRoom();
             console.log(username)
           }}
         >

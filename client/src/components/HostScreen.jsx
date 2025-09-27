@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 
 
 
-function HostScreen({buzzerWinner}) {
+function HostScreen({buzzerWinner, onDisconnectAll}) {
 
     const [isUnlocked, setIsUnlocked] = useState(false);
 
@@ -28,6 +28,7 @@ function HostScreen({buzzerWinner}) {
         audio.play();
     };
     
+    buzzerWinner ? playSound("buzz.mp3") : null;
 
     return (
 
@@ -42,9 +43,9 @@ function HostScreen({buzzerWinner}) {
                     <span className='icon text-xl pr-1'>&#128264;</span>
                     Sound
                 </button>
-                <button type="button" className="buzzer_switch flex-1 bg-gray-700 rounded-lg px-4 py-3">
+                <button onClick={onDisconnectAll} type="button" className="buzzer_switch flex-1 bg-gray-700 rounded-lg px-4 py-3">
                     <span className='icon text-xl pr-1'>&#128308;</span>
-                    buzzer
+                    reset
                 </button>
             </div>
             <div className='options_container flex gap-2 my-2'>
@@ -72,7 +73,7 @@ function HostScreen({buzzerWinner}) {
                         <span className='icon text-2xl'>&#128336;</span>
                         Time's up
                     </button>
-                    <button onClick={() => playSound("jingle.mp3")} className="qualified flex flex-col items-center bg-gray-700 rounded-lg px-4 py-3 flex-1 min-w-[70px] font-bold text-sm">
+                    <button onClick={() => playSound("qualified.mp3")} className="qualified flex flex-col items-center bg-gray-700 rounded-lg px-4 py-3 flex-1 min-w-[70px] font-bold text-sm">
                         <span className='icon text-2xl'>&#129395;</span>
                         Qualified
                     </button>

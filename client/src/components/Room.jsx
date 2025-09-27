@@ -1,19 +1,9 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import usewebsocket from 'react-use-websocket';
 import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
-import { useRef } from 'react';
 
-let participants = [
-    {"name" : "Freddy", "score" : 5},
-    {"name" : "Clever", "score" : 3},
-    {"name" : "Nadia", "score" : 2},
-    {"name" : "Sam", "score" : 1},
-    {"name" : "Nathalie", "score" : 2},
-    {"name" : "Nathalie", "score" : 5},
-]
 
 const WS_URL = 'ws://localhost:8000';
 
@@ -25,12 +15,12 @@ function Room() {
     const isAdmin = searchParams.get("admin") === "true";
     const [players, setPlayers] = useState([]);
     const [buzzerWinner, setBuzzerWinner] = useState(null);
-    const wsRef = useRef(null);
     const [buzzerStatus, setBuzzerStatus] = useState("ready"); // "ready", "buzzed", "blocked"
 
     //WebSocket connection
     const {sendJsonMessage } = usewebsocket(WS_URL, {
         queryParams: {username},
+
         onOpen: () => {
             if(isAdmin){
                 sendJsonMessage({type: "create-room", roomId: roomId, username: username})
@@ -64,9 +54,20 @@ function Room() {
                 setBuzzerWinner(null);
             }
 
+    
+            if (data.type === "force-disconnect") {
+                alert("Vous avez été déconnecté !");
+                window.location.href = "/"; // ou ton chemin de connexion
+            }
+
             console.log("Message from server ", data);
         }
     })
+
+    //
+    const handleDisconnectAll = () => {
+        sendJsonMessage({ type: "disconnect-all", roomId });
+    };
 
     const sendBuzz = () => {
        sendJsonMessage({type: "buzz", roomId: roomId, username: username})
@@ -82,7 +83,7 @@ function Room() {
                 </div>
 
                 {
-                    isAdmin ? <HostScreen buzzerWinner={buzzerWinner}/> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
+                    isAdmin ? <HostScreen buzzerWinner={buzzerWinner} onDisconnectAll={handleDisconnectAll}/> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
                 }
 
 

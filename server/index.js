@@ -110,6 +110,7 @@ wsServer.on('connection', (connection, request) => {
                 players: Object.keys(rooms[roomId].players),
             });
         }
+
         //If a player buzz
         if(data.type === "buzz"){
             const {roomId, username} = data;
@@ -141,7 +142,6 @@ wsServer.on('connection', (connection, request) => {
                 }
             });
 
-            
             broadcast(roomId, {
                 type: "buzz",
                 playerName: username,
@@ -156,6 +156,25 @@ wsServer.on('connection', (connection, request) => {
                 }
             }, 5000);
         }
+
+        if (data.type === "disconnect-all") {
+            const room = rooms[data.roomId];
+            if (!room) return;
+
+            const allSockets = [...Object.values(room.players), room.admin];
+
+            allSockets.forEach(socket => {
+                if (socket && socket.readyState === 1) {
+                    socket.send(JSON.stringify({ type: "force-disconnect" }));
+                    socket.close();
+                }
+            });
+
+            delete rooms[data.roomId];
+        }
+
+
+
 
         console.log('data', data); 
 
