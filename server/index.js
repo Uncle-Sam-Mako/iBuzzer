@@ -112,12 +112,16 @@ wsServer.on('connection', (connection, request) => {
         }
 
         if(data.type === "buzz"){
-            console.log("buzz")
+            const {roomId, username} = data;
+            broadcast(roomId, {
+                type: "buzz",
+                playerName: username,
+            });
         }
 
-        console.log(data) ; 
+        console.log('data', data); 
 
-        handleMessage(data.roomId, message, uuid)
+        //handleMessage(data.roomId, message, uuid)
     });
 
     //When a connection is closed
