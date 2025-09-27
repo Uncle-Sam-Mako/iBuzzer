@@ -19,22 +19,27 @@ let rooms = {};
 
 
 //Broadcast messages to all connected users
-const broadcast = () => {
-    Object.keys(connections).forEach(uuid => {
-        const connection = connections[uuid];
-        const message = JSON.stringify(users);
-        connection.send(message);
-    })
+const broadcast = (roomId, message) => {
+    const room = rooms[roomId];
+    if (!room) return; // Room does not exist
+
+    const allConnections = [...Object.values(room.players), room.admin];
+    
+    allConnections.forEach(conn => {    
+        if(conn && conn.readyState === conn.OPEN) {
+            conn.send(JSON.stringify(message));
+        }
+    });
 }
 
-const handleMessage = (bytes, uuid) => {
+const handleMessage = (roomId, bytes, uuid) => {
     const message = JSON.parse(bytes.toString());
     const user = users[uuid];
 
     user.state = message;
 
    
-    broadcast();
+    broadcast(roomId, JSON.stringify({users}));
 
     console.log(`${user.username} updated their state : ${JSON.stringify(user.state)}`);
 }
