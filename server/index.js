@@ -4,13 +4,18 @@ const url = require('url');
 const uuidv4 = require("uuid").v4;
 const {WebSocketServer} = require('ws');
 
+
+
+const PORT = 8000;
+
+
 //Create the HTTP server
 const server = http.createServer();
 
 //Attach the WebSocket server
 const wsServer = new WebSocketServer({server});
 
-const port = 8000;
+let rooms = {};
 
 
 //Broadcast messages to all connected users
@@ -28,6 +33,7 @@ const handleMessage = (bytes, uuid) => {
 
     user.state = message;
 
+   
     broadcast();
 
     console.log(`${user.username} updated their state : ${JSON.stringify(user.state)}`);
@@ -59,17 +65,46 @@ wsServer.on('connection', (connection, request) => {
         }
     }
 
-    connection.on('message', message => handleMessage(message, uuid));
+    connection.on('message', message => {
+
+        // Vérifie si c'est un buffer et parse en JSON
+        if (message instanceof Buffer) {
+            data = JSON.parse(message.toString());
+        } else {
+            data = message; // si déjà JSON
+        }
+
+
+        //If an admin wants to create a room
+        if(data.type === "create-room"){
+            console.log("Creating room ", data.roomId);
+            rooms[data.roomId] = {players: {}, admin: connection};
+            connection.send(JSON.stringify({type: "room-created", roomId: data.roomId}))
+        }
+
+        //If a player wants to join a room
+        if(data.type === "join-room"){
+            const {roomId, username} = data;
+
+            //Check if the room exists
+            if (!rooms[roomId]){
+                connection.send(JSON.stringify({type: "error", message: "Room does not exist"}));
+                return;
+            }
+
+            //add player to the room
+            rooms[roomId].players[uuid] = connection;
+            console.log("User ", username, " joined room ", roomId);
+        }
+
+
+        handleMessage(message, uuid)
+    });
 
     //When a connection is closed
     connection.on("close", () => handleClose(uuid));
 
 
-
-
-
-    console.log(uuid);
-    console.log(username);
 })
 
 //connections list
@@ -77,6 +112,6 @@ const connections = {};
 const users = {};
 
 //Start the sever
-server.listen(port, () => {
-    console.log(`WebSocket server is running on port ${port}`);
+server.listen(PORT, () => {
+    console.log(`WebSocket server is running on port ${PORT}`);
 })

@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import usewebsocket from 'react-use-websocket';
 import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
+import { useRef } from 'react';
 
 let participants = [
     {"name" : "Freddy", "score" : 5},
@@ -23,12 +24,42 @@ function Room() {
     const username = searchParams.get("name") || "Anonyme";
     const isAdmin = searchParams.get("admin") === "true";
 
-     const {sendJsonMessage } = usewebsocket(WS_URL, {
-        queryParams: {username} 
+
+    // useEffect(() => {
+    // //     const ws = new WebSocket(WS_URL)
+    // //     wsRef.current = ws;
+
+
+    // //     ws.onopen = () => {
+    // //         if(isAdmin){
+    // //             ws.send(JSON.stringify({type: "create-room", roomId, username}))
+    // //         } else {
+    // //             ws.send(JSON.stringify({type: "join-room", roomId, username}))
+    // //         }
+    // //     }
+
+
+    // //     return () => { ws.close(); }
+         
+    // }, [isAdmin, roomId, username]);
+
+    
+    const {sendJsonMessage } = usewebsocket(WS_URL, {
+        queryParams: {username},
+        onOpen: () => {
+            if(isAdmin){
+                sendJsonMessage({type: "create-room", roomId: roomId, username: username})
+            } else {
+                sendJsonMessage({type: "join-room", roomId: roomId, username: username})
+            }
+        },
+
+        onMessage: (message) => {
+            const data = JSON.parse(message.data);
+            console.log("Message from server ", data);
+        }
     })
 
-
-   
 
     return (
         <div className="w-full md:w-md max-w-md bg-primary-blue text-white mx-auto">
