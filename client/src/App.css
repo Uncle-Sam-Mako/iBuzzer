@@ -60,12 +60,26 @@
 
 /*Buzzer button*/
 .buzzer_btn {
-  background: radial-gradient(50% 50% at 50% 50%, #D77C7C 0%, #DE3D3D 100%);
-  border: 9px solid #FFFFFF;
-  box-shadow: 0px 0px 14.4px 15px rgba(0, 0, 0, 0.25);
+    border: 9px solid #FFFFFF;
+    box-shadow: 0px 0px 14.4px 15px rgba(0, 0, 0, 0.25);  
 }
 
-.buzzer_btn:hover {
+.buzzer_ready {
+  background: radial-gradient(50% 50% at 50% 50%, #D77C7C 0%, #DE3D3D 100%);
+  
+}
+.buzzer_buzzed {
+  background: radial-gradient(50% 50% at 50% 50%, #FFD078 0%, #FF8800 100%);
+}
+
+.buzzer_blocked {
+  background: radial-gradient(50% 50% at 50% 50%, #C4C4C4 0%, #7E7E7E 100%);
+  
+}
+
+.buzzer_ready:hover {
   background: radial-gradient(50% 50% at 50% 50%, #f19e9e 0%, #DE3D3D 100%);
   border: 9px solid #FFFFFF;
 }
+
+

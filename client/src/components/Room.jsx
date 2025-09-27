@@ -26,8 +26,9 @@ function Room() {
     const [players, setPlayers] = useState([]);
     const [buzzed, setBuzzed] = useState(null);
     const wsRef = useRef(null);
+    const [buzzerStatus, setBuzzerStatus] = useState("ready"); // "ready", "buzzed", "blocked"
 
-    
+    //WebSocket connection
     const {sendJsonMessage } = usewebsocket(WS_URL, {
         queryParams: {username},
         onOpen: () => {
@@ -46,10 +47,19 @@ function Room() {
             }
 
             if(data.type === "buzz"){
-                //
+                if(data.playerName === username){
+                    setBuzzerStatus("buzzed");
+                } else {
+                    setBuzzerStatus("blocked");
+                }
             }
-            if(data.type === "blocked"){
-                console.log("Buzzer is locked");
+
+            if(data.type === "blocked"){       
+                setBuzzerStatus("blocked");
+            }
+
+            if(data.type === "reset"){
+                setBuzzerStatus("ready");
             }
 
             console.log("Message from server ", data);
@@ -71,7 +81,7 @@ function Room() {
                 </div>
 
                 {
-                    isAdmin ? <HostScreen /> : <ParticipantScreen onBuzz={sendBuzz}/>
+                    isAdmin ? <HostScreen /> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
                 }
 
 

@@ -126,7 +126,7 @@ wsServer.on('connection', (connection, request) => {
             }
 
             room.locked = true;
-            room.buzzerWinnerId = uuid
+            room.buzzerWinnerId = uuid;
 
             // Notify all players about the buzz event
             const allConnections = [...Object.values(room.players), room.admin]; 
@@ -146,6 +146,15 @@ wsServer.on('connection', (connection, request) => {
                 type: "buzz",
                 playerName: username,
             });
+
+            // Auto-reset the buzzer after 5 seconds
+            setTimeout(() => {
+                if (room) {
+                    room.locked = false;
+                    room.buzzerWinner = null;
+                    broadcast(roomId, { type: "reset" });
+                }
+            }, 5000);
         }
 
         console.log('data', data); 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function ParticipantScreen({onBuzz}) {
+function ParticipantScreen({onBuzz, buzzerStatus}) {
     return (
 
 
@@ -15,8 +15,13 @@ function ParticipantScreen({onBuzz}) {
             </div>
 
             {/* Buzzer Button */}
-            <button onClick={onBuzz} className="buzzer_btn w-56 h-56 rounded-full! font-extrabold text-2xl! hover:border-red-300! hover:bg-red-600 transition!">
-                Appuyez pour buzzer
+            <button onClick={onBuzz} 
+                className={` 
+                 ${buzzerStatus === "ready" ? "buzzer_ready hover:border-red-300!" : ""}  
+                 ${buzzerStatus === "blocked" ? "buzzer_blocked hover:border-gray-300!" : ""} 
+                 ${buzzerStatus === "buzzed" ? "buzzer_buzzed hover:border-yellow-300!" : ""} 
+                 buzzer_btn w-56 h-56 rounded-full! font-extrabold text-2xl!transition!`}>
+                {buzzerStatus}
             </button>
         </div>
 
