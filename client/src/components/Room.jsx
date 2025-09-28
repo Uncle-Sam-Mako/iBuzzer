@@ -5,8 +5,9 @@ import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
 
 
-const WS_URL = process.env.REACT_APP_WS_URL;
+const WS_URL = 'ws://localhost:8000';
 
+console.log("WebSocket URL:", WS_URL);
 
 function Room() {
     const { roomId } = useParams();
