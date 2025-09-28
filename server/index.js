@@ -154,14 +154,14 @@ wsServer.on('connection', (connection, request) => {
                 playerName: username,
             });
 
-            // Auto-reset the buzzer after 5 seconds
+            // Auto-reset the buzzer after 7 seconds
             setTimeout(() => {
                 if (room) {
                     room.locked = false;
                     room.buzzerWinner = null;
                     broadcast(roomId, { type: "reset" });
                 }
-            }, 5000);
+            }, 7000);
         }
 
         if (data.type === "disconnect-all") {
