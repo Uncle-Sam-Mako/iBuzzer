@@ -10,7 +10,7 @@ function HostScreen({buzzerWinner, onDisconnectAll}) {
     const audioRef = useRef(null);
 
     const unlockAudio = () => {
-        const audio = new Audio("/assets/sounds/right.mp3");
+        const audio = new Audio("/assets/sounds/jingle.mp3");
         audio.play().then(() => setIsUnlocked(true));
     };
 
@@ -53,9 +53,9 @@ function HostScreen({buzzerWinner, onDisconnectAll}) {
                     <span className='icon text-xl pr-1'>&#128336;</span>
                     chrono
                 </button>
-                <button onClick={() => playSound("jingle.mp3")} type="button" className="jingle flex-1 bg-gray-700 rounded-lg px-4 py-3">
+                <button onClick={() => playSound("chrono_7s.mp3")} type="button" className="jingle flex-1 bg-gray-700 rounded-lg px-4 py-3">
                     <span className='icon text-xl pr-1'>&#127925;</span>
-                    Jingle
+                    Chrono (7s)
                 </button>
             </div>
             <div className='reactions_container'>
