@@ -5,7 +5,7 @@ import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
 
 
-const WS_URL = 'ws://localhost:8000';
+const WS_URL = 'https://ibuzzer.onrender.com';
 
 console.log("WebSocket URL:", WS_URL);
 
