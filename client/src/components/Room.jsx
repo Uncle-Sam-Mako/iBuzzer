@@ -84,7 +84,7 @@ function Room() {
                 </div>
 
                 {
-                    isAdmin ? <HostScreen buzzerWinner={buzzerWinner} onDisconnectAll={handleDisconnectAll}/> : <ParticipantScreen onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
+                    isAdmin ? <HostScreen buzzerWinner={buzzerWinner} onDisconnectAll={handleDisconnectAll}/> : <ParticipantScreen buzzerWinner={buzzerWinner} onBuzz={sendBuzz} buzzerStatus={buzzerStatus} />
                 }
 
 

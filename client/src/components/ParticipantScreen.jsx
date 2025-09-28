@@ -1,14 +1,15 @@
 import React from 'react'
 
-const buzzerMsg = {
-    "ready": "Appuyez pour prendre la main",
-    "buzzed": "Repondez rapidemment",
-    "blocked": "Patientez"
-}
 
-function ParticipantScreen({onBuzz, buzzerStatus}) {
+
+function ParticipantScreen({onBuzz, buzzerStatus, buzzerWinner}) {
+
+    const buzzerMsg = {
+        "ready": "Appuyez pour prendre la main",
+        "buzzed": "Repondez rapidemment",
+        "blocked": `Patientez... ${buzzerWinner ? `${buzzerWinner} a pris la main` : ""}`
+    }
     return (
-
 
         <div className="flex flex-col items-center my-3">
             {/* Score */}
