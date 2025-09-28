@@ -5,7 +5,7 @@ import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
 
 
-const WS_URL = 'ws://localhost:8000';
+const WS_URL = process.env.REACT_APP_WS_URL;
 
 
 function Room() {

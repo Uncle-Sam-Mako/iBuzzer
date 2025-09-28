@@ -4,9 +4,11 @@ const url = require('url');
 const uuidv4 = require("uuid").v4;
 const {WebSocketServer} = require('ws');
 
+const app = require('express')();
 
+app.use(cors())
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 
 //Create the HTTP server
