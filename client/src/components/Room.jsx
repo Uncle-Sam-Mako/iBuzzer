@@ -5,9 +5,8 @@ import ParticipantScreen from './ParticipantScreen';
 import HostScreen from './HostScreen';
 
 
-const WS_URL = 'https://ibuzzer.onrender.com';
+const WS_URL = 'ws://localhost:8000' //'https://ibuzzer.onrender.com';
 
-console.log("WebSocket URL:", WS_URL);
 
 function Room() {
     const { roomId } = useParams();

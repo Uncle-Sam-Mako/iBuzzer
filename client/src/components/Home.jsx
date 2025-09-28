@@ -30,7 +30,7 @@ function Home() {
         {/* Logo placeholder */}
         <div className="app_logo my-3 flex justify-center">
           <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center">
-            <span className="text-2xl font-bold">C</span>
+            <img src="/assets/cepac.png" alt="logo"/>
           </div>
         </div>
 
@@ -57,7 +57,7 @@ function Home() {
               value={username}
               onChange={e => setUsername(e.target.value)}
               type="text"
-              placeholder="Ex: James Bond"
+              placeholder="Ex: Justin Mwepu"
               className="w-full px-3 py-2 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
